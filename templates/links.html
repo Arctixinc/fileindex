@@ -6,64 +6,103 @@
     <title>File Stream</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom scroll behavior */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Floating arrow style */
+        /* Floating arrow styles */
         .arrow {
             position: fixed;
             right: 30px;
             background-color: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
-            padding: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             cursor: pointer;
-            transition: all 0.3s ease;
             opacity: 0;
             visibility: hidden;
+            transition: all 0.3s ease-in-out;
         }
 
         .arrow:hover {
             background-color: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
         .arrow svg {
-            width: 24px;
-            height: 24px;
-            fill: #4C51BF;
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
         }
 
-        .arrow:hover svg {
-            fill: #2B2D91;
-        }
-
-        /* Up arrow positioning */
         .arrow-up {
-            bottom: 100px;
+            bottom: 110px;
         }
 
-        /* Down arrow positioning */
         .arrow-down {
             bottom: 30px;
         }
 
-        /* Scroll state detection styles */
+        /* Floating arrow visibility */
         .show {
             opacity: 1;
             visibility: visible;
         }
+
+        /* Card hover effects */
+        .file-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border-radius: 16px;
+        }
+
+        .file-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(145deg, rgba(30, 64, 175, 0.8), rgba(53, 113, 239, 0.8));
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modern font family */
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Button Hover effect */
+        .btn {
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #3b82f6;
+            transform: translateY(-3px);
+        }
+
+        /* Neon effect */
+        .neon-text {
+            color: #fff;
+            text-shadow: 0 0 8px #3b82f6, 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+        }
+
+        /* Hover Effects for Links */
+        .hover-link:hover {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
-<body class="bg-gradient-to-r from-indigo-500 to-purple-600" onscroll="toggleArrows()">
+<body class="bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900" onscroll="toggleArrows()">
 
     <!-- Header -->
-    <header class="text-white py-12">
+    <header class="text-white py-16">
         <div class="container mx-auto text-center">
-            <h1 class="text-5xl font-extrabold tracking-wide">File Stream Hub</h1>
-            <p class="text-lg mt-4 text-gray-200">Stream your files seamlessly with a sleek, modern interface.</p>
+            <h1 class="text-5xl font-extrabold tracking-wide neon-text">File Stream Hub</h1>
+            <p class="text-lg mt-4 text-gray-100">Your files, streamed with style. Modern, fluid, and intuitive.</p>
         </div>
     </header>
 
@@ -73,19 +112,19 @@
 
             <!-- File Card -->
             {% for link in links %}
-            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 hover:shadow-lg">
+            <div class="file-card bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 hover:shadow-lg">
                 <!-- Thumbnail -->
-                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-48 flex items-center justify-center">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 h-48 flex items-center justify-center">
                     <span class="text-4xl text-white">🎬</span> <!-- Icon Placeholder -->
                 </div>
                 <!-- Content -->
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-indigo-600 transition duration-200">{{ link.name }}</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-blue-600 transition duration-200">{{ link.name }}</h3>
                     <p class="text-sm text-gray-500 mt-2">Size: {{ link.size }}</p>
                     <a 
                         href="{{ link.url }}" 
                         target="_self" 
-                        class="mt-4 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium text-sm hover:bg-indigo-700 transition"
+                        class="mt-4 inline-block btn bg-blue-600 text-white px-6 py-2 rounded-lg font-medium text-sm"
                     >
                         Play Now
                     </a>
@@ -97,7 +136,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-400 py-10">
+    <footer class="bg-blue-900 text-gray-400 py-10">
         <div class="container mx-auto text-center">
             <p>&copy; 2024 File Stream Hub. All Rights Reserved.</p>
             <p class="text-sm mt-2">
