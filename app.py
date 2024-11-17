@@ -39,7 +39,7 @@ def display_links():
         links.append({
             "name": file_name,
             "url": url,
-            "size": file_size
+            "size": format_bytes(file_size)
         })
 
     return render_template('links.html', links=links)
