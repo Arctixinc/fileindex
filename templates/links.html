@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Stream</title>
+    <title>Modern File Stream</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html {
@@ -13,11 +13,11 @@
         /* Floating arrow styles */
         .arrow {
             position: fixed;
-            right: 30px;
-            background-color: rgba(255, 255, 255, 0.7);
+            right: 20px;
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
-            padding: 14px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             opacity: 0;
             visibility: hidden;
@@ -25,107 +25,72 @@
         }
 
         .arrow:hover {
-            background-color: rgba(255, 255, 255, 1);
-            transform: scale(1.2);
-        }
-
-        .arrow svg {
-            width: 28px;
-            height: 28px;
-            fill: #ffffff;
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
         }
 
         .arrow-up {
-            bottom: 110px;
+            bottom: 90px;
         }
 
         .arrow-down {
-            bottom: 30px;
+            bottom: 20px;
         }
 
-        /* Floating arrow visibility */
-        .show {
+        .arrow.show {
             opacity: 1;
             visibility: visible;
         }
 
-        /* Card hover effects */
+        /* File card effects */
         .file-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .file-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 12px 50px rgba(0, 0, 0, 0.2);
-            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* Header Styling */
-        header {
-            background: linear-gradient(145deg, rgba(67, 56, 148, 0.8), rgba(99, 102, 241, 0.8));
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Modern font family */
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Button Hover effect */
-        .btn {
-            transition: background-color 0.3s, transform 0.3s ease-in-out;
-        }
-
-        .btn:hover {
-            background-color: #4f46e5;
-            transform: translateY(-3px);
-        }
-
-        /* Neon effect */
+        /* Neon header effect */
         .neon-text {
             color: #fff;
-            text-shadow: 0 0 8px #4f46e5, 0 0 10px #4f46e5, 0 0 20px #4f46e5;
+            text-shadow: 0 0 10px #4f46e5, 0 0 20px #4f46e5, 0 0 30px #4f46e5;
         }
 
-        /* Hover Effects for Links */
-        .hover-link:hover {
-            color: #4f46e5;
-            text-decoration: underline;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-
     </style>
 </head>
-<body class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800" onscroll="toggleArrows()">
+<body class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 text-white" onscroll="toggleArrows()">
 
     <!-- Header -->
-    <header class="text-white py-16">
+    <header class="py-16 bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg">
         <div class="container mx-auto text-center">
-            <h1 class="text-5xl font-extrabold tracking-wide neon-text">File Stream Hub</h1>
-            <p class="text-lg mt-4 text-gray-100">Your files, streamed with style. Modern, fluid, and intuitive.</p>
+            <h1 class="text-5xl font-bold neon-text">File Stream Hub</h1>
+            <p class="text-lg mt-4 text-gray-200">Stream your files effortlessly with a modern touch.</p>
         </div>
     </header>
 
     <!-- Main Section -->
-    <main class="container mx-auto py-16">
-        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <main class="container mx-auto py-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
             <!-- File Card -->
             {% for link in links %}
-            <div class="file-card bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 hover:shadow-lg">
+            <div class="file-card bg-white text-gray-900 hover:shadow-lg transform transition duration-300">
                 <!-- Thumbnail -->
-                <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-48 flex items-center justify-center">
-                    <img src="https://envs.sh/5bI.jpg" alt="Play"/> <!-- Replace with actual path to play icon PNG -->
+                <div class="h-48 bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center">
+                    <img src="https://envs.sh/5bI.jpg" alt="File Icon" />
                 </div>
                 <!-- Content -->
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-indigo-600 transition duration-200">{{ link.name }}</h3>
-                    <p class="text-sm text-gray-500 mt-2">Size: {{ link.size }}</p>
-                    <a 
-                        href="{{ link.url }}" 
-                        target="_self" 
-                        class="mt-4 inline-block btn bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium text-sm"
-                    >
+                    <h3 class="text-lg font-semibold truncate hover:text-indigo-600">{{ link.name }}</h3>
+                    <p class="text-sm text-gray-500 mt-1">Size: {{ link.size }}</p>
+                    <a href="{{ link.url }}" class="mt-4 block text-center bg-indigo-600 text-white py-2 rounded-lg transition hover:bg-indigo-700">
                         Play Now
                     </a>
                 </div>
@@ -133,78 +98,60 @@
             {% endfor %}
 
         </div>
-        <!-- Pagination Controls -->
-<div class="mt-8 flex justify-center items-center space-x-4">
-    {% if page > 1 %}
-    <a href="/?page={{ page - 1 }}" class="btn bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400">
-        Previous
-    </a>
-    {% endif %}
 
-    <span class="text-white font-medium">Page {{ page }} of {{ total_pages }}</span>
-
-    {% if page < total_pages %}
-    <a href="/?page={{ page + 1 }}" class="btn bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400">
-        Next
-    </a>
-    {% endif %}
-</div>
+        <!-- Pagination -->
+        <div class="mt-8 flex justify-center items-center space-x-4">
+            {% if page > 1 %}
+            <a href="/?page={{ page - 1 }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Previous</a>
+            {% endif %}
+            <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
+            {% if page < total_pages %}
+            <a href="/?page={{ page + 1 }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Next</a>
+            {% endif %}
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-indigo-900 text-gray-400 py-10">
+    <footer class="bg-indigo-900 py-10">
         <div class="container mx-auto text-center">
-            <p>&copy; 2024 File Stream Hub. All Rights Reserved.</p>
-            <p class="text-sm mt-2">
-                Crafted with love for an immersive streaming experience.
-            </p>
+            <p>&copy; 2024 File Stream Hub. All rights reserved.</p>
+            <p class="text-sm text-gray-400">Crafted for a seamless streaming experience.</p>
         </div>
     </footer>
 
-    <!-- Floating Navigation Arrows -->
+    <!-- Floating Arrows -->
     <div class="arrow arrow-up" onclick="scrollToTop()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6 text-gray-800">
+            <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
+        </svg>
     </div>
-
     <div class="arrow arrow-down" onclick="scrollToBottom()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6 text-gray-800">
+            <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
+        </svg>
     </div>
 
     <script>
-        // Function to scroll to the top
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Function to scroll to the bottom
         function scrollToBottom() {
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        // Function to toggle the visibility of the arrows
         function toggleArrows() {
             const scrollPosition = window.scrollY;
             const scrollHeight = document.body.scrollHeight;
             const windowHeight = window.innerHeight;
 
-            // Show up arrow only when scrolled down
             const upArrow = document.querySelector('.arrow-up');
-            if (scrollPosition > 100) {
-                upArrow.classList.add('show');
-            } else {
-                upArrow.classList.remove('show');
-            }
-
-            // Show down arrow only when not at the bottom
             const downArrow = document.querySelector('.arrow-down');
-            if (scrollPosition + windowHeight < scrollHeight - 10) {
-                downArrow.classList.add('show');
-            } else {
-                downArrow.classList.remove('show');
-            }
+
+            upArrow.classList.toggle('show', scrollPosition > 100);
+            downArrow.classList.toggle('show', scrollPosition + windowHeight < scrollHeight - 10);
         }
 
-        // Initial call to handle the arrow visibility on page load
         window.onload = toggleArrows;
     </script>
 
