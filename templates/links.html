@@ -7,66 +7,48 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
+
     <!-- Header -->
-    <header class="bg-red-600 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-bold">My File Stream</h1>
-            <input 
-                type="search" 
-                placeholder="Search files..." 
-                class="w-1/2 p-2 rounded bg-white text-gray-700 focus:outline-none"
-            >
-        </div>
+    <header class="bg-red-600 text-white p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold">My File Stream</h1>
+        <input 
+            type="search" 
+            placeholder="Search files..." 
+            class="rounded-md px-4 py-2 w-2/3 md:w-1/3 focus:outline-none focus:ring-2 focus:ring-white"
+        >
     </header>
 
-    <!-- File Cards -->
-    <div class="container mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <!-- Container -->
+    <div class="container mx-auto p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+        <!-- File Card -->
         {% for link in links %}
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-black h-40 flex items-center justify-center text-white text-lg">
-                <span>Play File</span>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+            <!-- Thumbnail Placeholder -->
+            <div class="bg-gray-800 h-40 flex items-center justify-center text-white text-lg font-semibold">
+                Play File
             </div>
-            <div class="p-4 text-center">
-                <h3 class="font-semibold text-gray-800">{{ link.name }}</h3>
+            <!-- Details -->
+            <div class="p-4">
+                <p class="text-lg font-bold text-gray-700 truncate">{{ link.name }}</p>
                 <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
                 <a 
                     href="{{ link.url }}" 
                     target="_blank" 
-                    class="mt-2 inline-block px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                    class="block mt-3 text-center bg-red-600 text-white font-semibold rounded-md py-2 hover:bg-red-700"
                 >
                     Play
                 </a>
             </div>
         </div>
         {% endfor %}
-    </div>
 
-    <!-- Pagination -->
-    <div class="container mx-auto flex justify-center items-center mt-6 space-x-4">
-        {% if page > 1 %}
-        <a 
-            href="/?page={{ page - 1 }}" 
-            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-        >
-            Previous
-        </a>
-        {% endif %}
-
-        <span class="text-gray-700">Page {{ page }} of {{ total_pages }}</span>
-
-        {% if page < total_pages %}
-        <a 
-            href="/?page={{ page + 1 }}" 
-            class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition"
-        >
-            Next
-        </a>
-        {% endif %}
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+    <footer class="bg-gray-800 text-white text-center py-4 mt-4">
         <p>&copy; 2024 My File Stream. All Rights Reserved.</p>
     </footer>
+
 </body>
 </html>
