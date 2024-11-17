@@ -35,5 +35,5 @@ def display_links():
     return render_template('links.html', links=links, page=page, total_pages=total_pages)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
   
