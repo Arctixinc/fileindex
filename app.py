@@ -44,5 +44,9 @@ def display_links():
 
     return render_template('links.html', links=links)
 
+@app.route('/status')
+def server_status():
+    return jsonify({"status": "OK", "message": "Server is running"}), 200
+
 if __name__ == "__main__":
     app.run(debug=True)
