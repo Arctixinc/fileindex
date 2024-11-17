@@ -26,8 +26,8 @@ def format_bytes(bytes):
 def display_links():
     links = []
     
-    # Fetch all documents from the MongoDB collection
-    documents = collection.find()
+    # Fetch all documents from the MongoDB collection, sorted by _id in descending order
+    documents = collection.find().sort('_id', -1)  # -1 sorts in descending order
 
     for doc in documents:
         file_name = doc.get("file_name", "Unknown")
@@ -46,4 +46,3 @@ def display_links():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
