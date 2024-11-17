@@ -9,13 +9,8 @@
 <body class="bg-gray-100">
 
     <!-- Header -->
-    <header class="bg-red-600 text-white p-4 flex justify-between items-center">
+    <header class="bg-red-600 text-white p-4 flex justify-center">
         <h1 class="text-xl font-bold">My File Stream</h1>
-        <input 
-            type="search" 
-            placeholder="Search files..." 
-            class="rounded-md px-4 py-2 w-2/3 md:w-1/3 focus:outline-none focus:ring-2 focus:ring-white"
-        >
     </header>
 
     <!-- Container -->
@@ -23,18 +18,18 @@
 
         <!-- File Card -->
         {% for link in links %}
-        <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+        <div class="file-card bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
             <!-- Thumbnail Placeholder -->
             <div class="bg-gray-800 h-40 flex items-center justify-center text-white text-lg font-semibold">
                 Play File
             </div>
             <!-- Details -->
             <div class="p-4">
-                <p class="text-lg font-bold text-gray-700 truncate">{{ link.name }}</p>
+                <p class="file-name text-lg font-bold text-gray-700 truncate">{{ link.name }}</p>
                 <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
                 <a 
                     href="{{ link.url }}" 
-                    target="_blank" 
+                    target="_parent" 
                     class="block mt-3 text-center bg-red-600 text-white font-semibold rounded-md py-2 hover:bg-red-700"
                 >
                     Play
