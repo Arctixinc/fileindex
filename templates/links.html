@@ -3,47 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My File Stream</title>
+    <title>File Stream</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Floating arrow style */
+        .arrow {
+            position: fixed;
+            right: 30px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .arrow:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
+
+        .arrow svg {
+            width: 24px;
+            height: 24px;
+            fill: #4C51BF;
+        }
+
+        .arrow:hover svg {
+            fill: #2B2D91;
+        }
+
+        /* Up arrow positioning */
+        .arrow-up {
+            bottom: 100px;
+        }
+
+        /* Down arrow positioning */
+        .arrow-down {
+            bottom: 30px;
+        }
+
+        /* Scroll state detection styles */
+        .show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gradient-to-r from-indigo-500 to-purple-600" onscroll="toggleArrows()">
 
     <!-- Header -->
-    <header class="bg-red-600 text-white p-4 flex justify-center">
-        <h1 class="text-xl font-bold">My File Stream</h1>
+    <header class="text-white py-12">
+        <div class="container mx-auto text-center">
+            <h1 class="text-5xl font-extrabold tracking-wide">File Stream Hub</h1>
+            <p class="text-lg mt-4 text-gray-200">Stream your files seamlessly with a sleek, modern interface.</p>
+        </div>
     </header>
 
-    <!-- Container -->
-    <div class="container mx-auto p-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <!-- Main Section -->
+    <main class="container mx-auto py-16">
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
-        <!-- File Card -->
-        {% for link in links %}
-        <div class="file-card bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
-            <!-- Thumbnail Placeholder -->
-            <div class="bg-gray-800 h-40 flex items-center justify-center text-white text-lg font-semibold">
-                Play File
+            <!-- File Card -->
+            {% for link in links %}
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 hover:shadow-lg">
+                <!-- Thumbnail -->
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-48 flex items-center justify-center">
+                    <span class="text-4xl text-white">🎬</span> <!-- Icon Placeholder -->
+                </div>
+                <!-- Content -->
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-indigo-600 transition duration-200">{{ link.name }}</h3>
+                    <p class="text-sm text-gray-500 mt-2">Size: {{ link.size }}</p>
+                    <a 
+                        href="{{ link.url }}" 
+                        target="_self" 
+                        class="mt-4 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium text-sm hover:bg-indigo-700 transition"
+                    >
+                        Play Now
+                    </a>
+                </div>
             </div>
-            <!-- Details -->
-            <div class="p-4">
-                <p class="file-name text-lg font-bold text-gray-700 truncate">{{ link.name }}</p>
-                <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
-                <a 
-                    href="{{ link.url }}" 
-                    target="_self" 
-                    class="block mt-3 text-center bg-red-600 text-white font-semibold rounded-md py-2 hover:bg-red-700"
-                >
-                    Play
-                </a>
-            </div>
+            {% endfor %}
+
         </div>
-        {% endfor %}
-
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white text-center py-4 mt-4">
-        <p>&copy; 2024 My File Stream. All Rights Reserved.</p>
+    <footer class="bg-gray-800 text-gray-400 py-10">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 File Stream Hub. All Rights Reserved.</p>
+            <p class="text-sm mt-2">
+                Crafted with love for an immersive streaming experience.
+            </p>
+        </div>
     </footer>
+
+    <!-- Floating Navigation Arrows -->
+    <div class="arrow arrow-up" onclick="scrollToTop()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path></svg>
+    </div>
+
+    <div class="arrow arrow-down" onclick="scrollToBottom()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path></svg>
+    </div>
+
+    <script>
+        // Function to scroll to the top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Function to scroll to the bottom
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // Function to toggle the visibility of the arrows
+        function toggleArrows() {
+            const scrollPosition = window.scrollY;
+            const scrollHeight = document.body.scrollHeight;
+            const windowHeight = window.innerHeight;
+
+            // Show up arrow only when scrolled down
+            const upArrow = document.querySelector('.arrow-up');
+            if (scrollPosition > 100) {
+                upArrow.classList.add('show');
+            } else {
+                upArrow.classList.remove('show');
+            }
+
+            // Show down arrow only when not at the bottom
+            const downArrow = document.querySelector('.arrow-down');
+            if (scrollPosition + windowHeight < scrollHeight - 10) {
+                downArrow.classList.add('show');
+            } else {
+                downArrow.classList.remove('show');
+            }
+        }
+
+        // Initial call to handle the arrow visibility on page load
+        window.onload = toggleArrows;
+    </script>
 
 </body>
 </html>
