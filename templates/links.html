@@ -63,7 +63,7 @@
 
         /* Header Styling */
         header {
-            background: linear-gradient(145deg, rgba(30, 64, 175, 0.8), rgba(53, 113, 239, 0.8));
+            background: linear-gradient(145deg, rgba(67, 56, 148, 0.8), rgba(99, 102, 241, 0.8));
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
@@ -78,25 +78,25 @@
         }
 
         .btn:hover {
-            background-color: #3b82f6;
+            background-color: #4f46e5;
             transform: translateY(-3px);
         }
 
         /* Neon effect */
         .neon-text {
             color: #fff;
-            text-shadow: 0 0 8px #3b82f6, 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+            text-shadow: 0 0 8px #4f46e5, 0 0 10px #4f46e5, 0 0 20px #4f46e5;
         }
 
         /* Hover Effects for Links */
         .hover-link:hover {
-            color: #3b82f6;
+            color: #4f46e5;
             text-decoration: underline;
         }
 
     </style>
 </head>
-<body class="bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900" onscroll="toggleArrows()">
+<body class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800" onscroll="toggleArrows()">
 
     <!-- Header -->
     <header class="text-white py-16">
@@ -114,17 +114,17 @@
             {% for link in links %}
             <div class="file-card bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition duration-300 hover:shadow-lg">
                 <!-- Thumbnail -->
-                <div class="bg-gradient-to-r from-blue-600 to-blue-800 h-48 flex items-center justify-center">
+                <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-48 flex items-center justify-center">
                     <span class="text-4xl text-white">🎬</span> <!-- Icon Placeholder -->
                 </div>
                 <!-- Content -->
                 <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-blue-600 transition duration-200">{{ link.name }}</h3>
+                    <h3 class="text-xl font-semibold text-gray-800 truncate hover:text-indigo-600 transition duration-200">{{ link.name }}</h3>
                     <p class="text-sm text-gray-500 mt-2">Size: {{ link.size }}</p>
                     <a 
                         href="{{ link.url }}" 
                         target="_self" 
-                        class="mt-4 inline-block btn bg-blue-600 text-white px-6 py-2 rounded-lg font-medium text-sm"
+                        class="mt-4 inline-block btn bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium text-sm"
                     >
                         Play Now
                     </a>
@@ -136,7 +136,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-blue-900 text-gray-400 py-10">
+    <footer class="bg-indigo-900 text-gray-400 py-10">
         <div class="container mx-auto text-center">
             <p>&copy; 2024 File Stream Hub. All Rights Reserved.</p>
             <p class="text-sm mt-2">
