@@ -21,32 +21,37 @@ def format_bytes(bytes):
     else:
         return f"{bytes / 1073741824:.2f} GB"
 
-# Fetch links from MongoDB
+# Fetch links from MongoDB with pagination
 @app.route('/')
 def display_links():
-    links = []
-    
-    # Fetch all documents from the MongoDB collection, sorted by _id in descending order
-    documents = collection.find().sort('_id', -1)  # -1 sorts in descending order
+    # Get the current page number from query parameters, default to 1
+    page = int(request.args.get('page', 1))
+    per_page = 20  # Items per page
 
+    # Calculate the skip value
+    skip = (page - 1) * per_page
+
+    # Fetch documents with skip and limit for pagination
+    documents = collection.find().sort('_id', -1).skip(skip).limit(per_page)
+
+    # Count total documents to calculate total pages
+    total_count = collection.count_documents({})
+    total_pages = (total_count + per_page - 1) // per_page
+
+    links = []
     for doc in documents:
         file_name = doc.get("file_name", "Unknown")
         document_id = str(doc.get("_id"))
         file_size = doc.get("file_size", "Unknown")
         url = f"https://filetolinkbyarctix.arctixapis.workers.dev/watch/{document_id}"
-        
-        # Append data to the links list
+
         links.append({
             "name": file_name,
             "url": url,
             "size": format_bytes(file_size)
         })
 
-    return render_template('links.html', links=links)
-
-@app.route('/status')
-def server_status():
-    return jsonify({"status": "OK", "message": "Server is running"}), 200
+    return render_template('links.html', links=links, page=page, total_pages=total_pages)
 
 if __name__ == "__main__":
     app.run(debug=True)
