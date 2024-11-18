@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 import pytz
 
@@ -24,11 +24,13 @@ def format_bytes(bytes):
         return f"{bytes / 1073741824:.2f} GB"
 
 def format_datetime(value):
+    if isinstance(value, (int, float)):
+        value = datetime.fromtimestamp(value, tz=timezone.utc)
     if isinstance(value, datetime):
-        utc_time = value.replace(tzinfo=pytz.utc)
-        ist_time = utc_time.astimezone(pytz.timezone('Asia/Kolkata'))
+        ist_time = value.astimezone(pytz.timezone('Asia/Kolkata'))
         return ist_time.strftime('%Y-%m-%d %I:%M:%S %p')
     return "Unknown"
+
 
 @app.route('/')
 def display_links():
