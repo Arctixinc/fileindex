@@ -122,13 +122,6 @@
         font-size: 14px;
       }
 
-      .highlight {
-        background-color: yellow;
-        color: #000;
-        font-weight: bold;
-        padding: 0 2px;
-      }
-
       .arrow {
         position: fixed;
         z-index: 100;
@@ -192,26 +185,10 @@
     <main class="container mx-auto py-12">
       {% if search_query %}
       <p class="text-center text-gray-300">Results for "{{ search_query }}"</p>
-      {% if suggestions and not links %}
-      <p class="block mt-2 text-gray-400">(Suggestions provided for similar queries)</p>
       {% endif %}
-      {% endif %}
-      
       {% if not links %}
       <div class="text-center text-gray-300">
-        <p>No files found for "{{ search_query }}".</p>
-        {% if suggestions %}
-        <p class="mt-4 text-gray-300">Did you mean:</p>
-        <ul class="mt-2 space-y-2">
-          {% for suggestion in suggestions %}
-          <li>
-            <a href="/?search={{ suggestion }}" class="text-blue-400 underline">{{ suggestion }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p>No related suggestions found.</p>
-        {% endif %}
+        <p>No files found for this page.</p>
       </div>
       {% else %}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -221,9 +198,7 @@
             <img src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}" alt="Thumbnail for {{ link.name }}" loading="lazy" />
           </div>
           <div class="file-card-content">
-            <h3>
-              {{ link.name|replace(search_query, '<span class="highlight">' + search_query + '</span>')|safe }}
-            </h3>
+            <h3>{{ link.name }}</h3>
             <p>Size: {{ link.size }}</p>
             <p>Uploaded: {{ link.time }}</p>
             {% if link.url %}
@@ -253,30 +228,52 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>&copy; 2024 File Stream Hub | All Rights Reserved</p>
+      <div class="container mx-auto">
+        <p>&copy; 2024 File Stream Hub. All rights reserved.</p>
+        <p class="text-sm text-gray-400">Crafted for a seamless streaming experience.</p>
+      </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <div id="back-to-top" class="arrow">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7-7-7 7"></path>
+    <!-- Floating Arrows -->
+    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
+      </svg>
+    </div>
+    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
       </svg>
     </div>
 
     <script>
-      // Show back-to-top button
-      window.onscroll = function() {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-          document.getElementById("back-to-top").classList.add("show");
-        } else {
-          document.getElementById("back-to-top").classList.remove("show");
-        }
-      };
-
-      // Scroll to top when clicked
-      document.getElementById("back-to-top").addEventListener("click", function() {
+      function scrollToTop() {
         window.scrollTo({ top: 0, behavior: "smooth" });
-      });
+      }
+
+      function scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }
+
+      function toggleArrows() {
+        const scrollPosition = window.scrollY;
+        const scrollHeight = document.body.scrollHeight;
+        const windowHeight = window.innerHeight;
+
+        const upArrow = document.querySelector(".arrow-up");
+        const downArrow = document.querySelector(".arrow-down");
+
+        upArrow.classList.toggle("show", scrollPosition > 100);
+        downArrow.classList.toggle(
+          "show",
+          scrollPosition + windowHeight < scrollHeight - 10
+        );
+      }
+
+      window.onload = function () {
+        document.getElementById("loading").style.display = "none";
+        toggleArrows();
+      };
     </script>
   </body>
 </html>
