@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Stream and access files effortlessly on File Stream Hub.">
+    <meta name="keywords" content="file streaming, file sharing, modern file hub">
+    <meta name="author" content="File Stream Hub">
     <title>Modern File Stream</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -67,6 +70,11 @@
 </head>
 <body class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-indigo-800 text-white" onscroll="toggleArrows()">
 
+    <!-- Loading Spinner -->
+    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-indigo-800 text-white">
+        <p>Loading...</p>
+    </div>
+
     <!-- Header -->
     <header class="py-16 bg-gradient-to-r from-indigo-500 to-blue-500 shadow-lg">
         <div class="container mx-auto text-center">
@@ -77,36 +85,48 @@
 
     <!-- Main Section -->
     <main class="container mx-auto py-12">
+        {% if not links %}
+        <div class="text-center text-gray-300">
+            <p>No files found for this page.</p>
+        </div>
+        {% else %}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-
             <!-- File Card -->
             {% for link in links %}
             <div class="file-card bg-white text-gray-900 hover:shadow-lg transform transition duration-300">
                 <!-- Thumbnail -->
                 <div class="h-48 bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center">
-                    <img src="https://envs.sh/5bI.jpg" alt="File Icon" />
+                    <img src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}" alt="Thumbnail for {{ link.name }}" loading="lazy" />
                 </div>
                 <!-- Content -->
                 <div class="p-6">
                     <h3 class="text-lg font-semibold truncate hover:text-indigo-600">{{ link.name }}</h3>
                     <p class="text-sm text-gray-500 mt-1">Size: {{ link.size }}</p>
-                    <a href="{{ link.url }}"  target="_blank" class="mt-4 block text-center bg-indigo-600 text-white py-2 rounded-lg transition hover:bg-indigo-700">
+                    {% if link.url %}
+                    <a href="{{ link.url }}" target="_blank" class="mt-4 block text-center bg-indigo-600 text-white py-2 rounded-lg transition hover:bg-indigo-700">
                         Play Now
                     </a>
+                    {% else %}
+                    <a href="#" class="mt-4 block text-center bg-red-600 text-white py-2 rounded-lg cursor-not-allowed">
+                        Link Unavailable
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
-
         </div>
+        {% endif %}
 
         <!-- Pagination -->
         <div class="mt-8 flex justify-center items-center space-x-4">
             {% if page > 1 %}
+            <a href="/?page=1" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">First</a>
             <a href="/?page={{ page - 1 }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Previous</a>
             {% endif %}
             <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
             {% if page < total_pages %}
             <a href="/?page={{ page + 1 }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Next</a>
+            <a href="/?page={{ total_pages }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300">Last</a>
             {% endif %}
         </div>
     </main>
@@ -120,12 +140,12 @@
     </footer>
 
     <!-- Floating Arrows -->
-    <div class="arrow arrow-up" onclick="scrollToTop()">
+    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6 text-gray-800">
             <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
         </svg>
     </div>
-    <div class="arrow arrow-down" onclick="scrollToBottom()">
+    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6 text-gray-800">
             <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
         </svg>
@@ -152,7 +172,10 @@
             downArrow.classList.toggle('show', scrollPosition + windowHeight < scrollHeight - 10);
         }
 
-        window.onload = toggleArrows;
+        window.onload = function () {
+            document.getElementById('loading').style.display = 'none';
+            toggleArrows();
+        };
     </script>
 
 </body>
