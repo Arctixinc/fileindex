@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -21,7 +22,14 @@ def format_bytes(bytes):
     else:
         return f"{bytes / 1073741824:.2f} GB"
 
-# Fetch links from MongoDB with pagination
+
+@app.template_filter('format_datetime')
+def format_datetime(value):
+    if isinstance(value, (int, float)):
+        value = datetime.fromtimestamp(value)
+    return value.strftime('%Y-%m-%d %I:%M:%S %p') if isinstance(value, datetime) else "Unknown"
+
+
 @app.route('/')
 def display_links():
     # Get the current page number from query parameters, default to 1
@@ -43,13 +51,16 @@ def display_links():
         file_name = doc.get("file_name", "Unknown")
         document_id = str(doc.get("_id"))
         file_size = doc.get("file_size", "Unknown")
+        upload_time = doc.get("time")  # Ensure "time" field exists in your MongoDB documents
         url = f"https://filetolinkbyarctix.arctixapis.workers.dev/watch/{document_id}"
-
+        
         links.append({
             "name": file_name,
             "url": url,
-            "size": format_bytes(file_size)
+            "size": format_bytes(file_size),
+            "time": format_datetime(upload_time)
         })
+        
 
     return render_template('links.html', links=links, page=page, total_pages=total_pages)
 
