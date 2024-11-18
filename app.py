@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
-import json
 from datetime import datetime
+import json
+import pytz
 
 app = Flask(__name__)
 
 # Connect to MongoDB
 client = MongoClient("mongodb+srv://sibuna123:sibuna123@personalproject.rb8q7.mongodb.net")
-db = client["FileStream"]  # Database name
-collection = db["file"]    # Collection name
+db = client["FileStream"]
+collection = db["file"]
 
 # Custom filter for size formatting
 @app.template_filter('format_bytes')
@@ -22,28 +23,31 @@ def format_bytes(bytes):
     else:
         return f"{bytes / 1073741824:.2f} GB"
 
-
-@app.template_filter('format_datetime')
 def format_datetime(value):
-    if isinstance(value, (int, float)):
-        value = datetime.fromtimestamp(value)
-    return value.strftime('%Y-%m-%d %I:%M:%S %p') if isinstance(value, datetime) else "Unknown"
-
+    if isinstance(value, datetime):
+        utc_time = value.replace(tzinfo=pytz.utc)
+        ist_time = utc_time.astimezone(pytz.timezone('Asia/Kolkata'))
+        return ist_time.strftime('%Y-%m-%d %I:%M:%S %p')
+    return "Unknown"
 
 @app.route('/')
 def display_links():
-    # Get the current page number from query parameters, default to 1
-    page = int(request.args.get('page', 1))
-    per_page = 20  # Items per page
+    # Get the search query from the URL parameter
+    search_query = request.args.get('search', '').lower()
 
-    # Calculate the skip value
+    page = int(request.args.get('page', 1))
+    per_page = 20
     skip = (page - 1) * per_page
 
-    # Fetch documents with skip and limit for pagination
-    documents = collection.find().sort('_id', -1).skip(skip).limit(per_page)
+    # Build the search query for MongoDB
+    query = {}
+    if search_query:
+        query = {"file_name": {"$regex": search_query, "$options": "i"}}  # Case-insensitive search
 
-    # Count total documents to calculate total pages
-    total_count = collection.count_documents({})
+    # Fetch documents with the search query
+    documents = collection.find(query).sort('_id', -1).skip(skip).limit(per_page)
+
+    total_count = collection.count_documents(query)
     total_pages = (total_count + per_page - 1) // per_page
 
     links = []
@@ -51,23 +55,19 @@ def display_links():
         file_name = doc.get("file_name", "Unknown")
         document_id = str(doc.get("_id"))
         file_size = doc.get("file_size", "Unknown")
-        upload_time = doc.get("time")  # Ensure "time" field exists in your MongoDB documents
+        upload_time = doc.get("time", "Unknown")
+        formatted_time = format_datetime(upload_time)
+
         url = f"https://filetolinkbyarctix.arctixapis.workers.dev/watch/{document_id}"
-        
+
         links.append({
             "name": file_name,
             "url": url,
             "size": format_bytes(file_size),
-            "time": format_datetime(upload_time)
+            "time": formatted_time  # Pass the formatted time
         })
-        
 
-    return render_template('links.html', links=links, page=page, total_pages=total_pages)
-
-
-@app.route('/status')
-def status():
-    return jsonify({"status": "Server is running"}), 200
+    return render_template('links.html', links=links, page=page, total_pages=total_pages, search_query=search_query)
 
 if __name__ == "__main__":
     app.run(debug=True)
