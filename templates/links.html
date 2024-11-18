@@ -189,7 +189,7 @@
       </div>
       {% else %}
       {% if search_query and page == 1 %}
-      <p class="text-center text-gray-300">Results for "{{ search_query }}"</p>
+      <p class="text-center text-gray-300">Total {{ total_count }} Results found for "{{ search_query }}"</p>
       <br/>
       {% endif %}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
