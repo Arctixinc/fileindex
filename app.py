@@ -41,18 +41,50 @@ def display_links():
     per_page = 20
     skip = (page - 1) * per_page
 
-    # Build the search query for MongoDB
-    query = {}
-    if search_query:
-        query = {"file_name": {"$regex": search_query, "$options": "i"}}  # Case-insensitive search
-
-    # Fetch documents with the search query
-    documents = collection.find(query).sort('_id', -1).skip(skip).limit(per_page)
-
-    total_count = collection.count_documents(query)
-    total_pages = (total_count + per_page - 1) // per_page
-
     links = []
+    suggestions = []
+    total_count = 0
+
+    if search_query:
+        # Main search query
+        pipeline = [
+            {
+                "$search": {
+                    "text": {
+                        "query": search_query,
+                        "path": "file_name",
+                        "fuzzy": {"maxEdits": 2}  # Fuzzy matching
+                    }
+                }
+            },
+            {"$sort": {"_id": -1}},
+            {"$skip": skip},
+            {"$limit": per_page}
+        ]
+        documents = list(collection.aggregate(pipeline))
+        total_count = len(documents)
+
+        # If no exact matches, find suggestions
+        if not documents:
+            suggestion_pipeline = [
+                {
+                    "$search": {
+                        "autocomplete": {
+                            "query": search_query,
+                            "path": "file_name",
+                            "fuzzy": {"maxEdits": 1}  # Autocomplete suggestions
+                        }
+                    }
+                },
+                {"$limit": 5}  # Limit the number of suggestions
+            ]
+            suggestions = [
+                doc["file_name"] for doc in collection.aggregate(suggestion_pipeline)
+            ]
+    else:
+        # No search query, fetch default results
+        documents = collection.find().sort('_id', -1).skip(skip).limit(per_page)
+
     for doc in documents:
         file_name = doc.get("file_name", "Unknown")
         document_id = str(doc.get("_id"))
@@ -66,10 +98,20 @@ def display_links():
             "name": file_name,
             "url": url,
             "size": format_bytes(file_size),
-            "time": formatted_time  # Pass the formatted time
+            "time": formatted_time
         })
 
-    return render_template('links.html', links=links, page=page, total_pages=total_pages, search_query=search_query)
+    # Total pages for pagination
+    total_pages = (total_count + per_page - 1) // per_page
+
+    return render_template(
+        'links.html',
+        links=links,
+        suggestions=suggestions,  # Pass suggestions to the template
+        page=page,
+        total_pages=total_pages,
+        search_query=search_query
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
