@@ -69,11 +69,12 @@ def display_links():
             "time": formatted_time  # Pass the formatted time
         })
 
-    return render_template('links.html', links=links, page=page, total_pages=total_pages, search_query=search_query)
+    return render_template('links.html', links=links, page=page, total_pages=total_pages, search_query=search_query, total_count=total_count)
 
 @app.route('/status')
 def status():
     return jsonify({"status": "Server is running"}), 200
-    
+
+
 if __name__ == "__main__":
     app.run(debug=True)
