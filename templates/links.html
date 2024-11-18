@@ -183,14 +183,15 @@
 
     <!-- Main Section -->
     <main class="container mx-auto py-12">
-      {% if search_query %}
-      <p class="text-center text-gray-300">Results for "{{ search_query }}"</p>
-      {% endif %}
       {% if not links %}
       <div class="text-center text-gray-300">
-        <p>No files found for this page.</p>
+        <p>No files found for "{{ search_query }}"</p>
       </div>
       {% else %}
+      {% if search_query %}
+      <p class="text-center text-gray-300">Results for "{{ search_query }}"</p>
+      <br/>
+      {% endif %}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {% for link in links %}
         <div class="file-card">
@@ -210,8 +211,7 @@
         </div>
         {% endfor %}
       </div>
-      {% endif %}
-
+    
       <!-- Pagination -->
       <div class="mt-8 flex justify-center items-center space-x-4">
         {% if page > 1 %}
@@ -224,7 +224,9 @@
         <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="btn bg-gray-200 text-gray-800">Last</a>
         {% endif %}
       </div>
+      {% endif %}
     </main>
+    
 
     <!-- Footer -->
     <footer class="footer">
