@@ -71,5 +71,10 @@ def display_links():
 
     return render_template('links.html', links=links, page=page, total_pages=total_pages, search_query=search_query)
 
+
+@app.route('/status')
+def status():
+    return jsonify({"status": "Server is running"}), 200
+    
 if __name__ == "__main__":
     app.run(debug=True)
