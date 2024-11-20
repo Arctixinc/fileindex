@@ -3,88 +3,113 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Stream and access files effortlessly on File Stream Hub."
-    />
+    <meta name="description" content="Stream and access files effortlessly on File Stream Hub." />
     <meta name="keywords" content="file streaming, file sharing, modern file hub" />
     <meta name="author" content="File Stream Hub" />
-    <title>File Stream Hub - Modern File Streaming</title>
+    <title>Modern File Stream</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
-        font-family: "Inter", sans-serif;
-        background: linear-gradient(135deg, #1a2334, #2e3a52);
-        color: #f1f5f9;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #2e3b4e, #3b5b72);
+        color: #f9f9f9;
         margin: 0;
+        padding: 0;
       }
-      .header {
-        text-align: center;
-        padding: 30px 0;
+
+      .neon-text {
+        color: #fff;
+        text-shadow: 0 0 15px #48c6ef, 0 0 25px #48c6ef, 0 0 35px #48c6ef;
+        transition: text-shadow 0.4s ease-in-out;
       }
+
+      .neon-text:hover {
+        text-shadow: 0 0 20px #48c6ef, 0 0 30px #48c6ef, 0 0 40px #48c6ef;
+      }
+
       .logo {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #48c6ef;
+        font-size: 3.5rem;
+        font-weight: 800;
         letter-spacing: 1px;
         cursor: pointer;
+        transition: transform 0.3s ease, color 0.3s ease;
       }
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
-      .btn {
-        background-color: #4c6ef5;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 8px;
-        text-transform: uppercase;
-        font-weight: bold;
-        transition: background 0.3s ease;
-      }
-      .btn:hover {
-        background-color: #3b5bdb;
-      }
-      .form-group label {
-        font-size: 14px;
-        color: #cbd5e1;
-      }
-      .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-      }
-      .pagination a {
-        padding: 10px 15px;
-        margin: 0 5px;
-        background: #2d3748;
-        color: #fff;
-        border-radius: 4px;
-        text-decoration: none;
-        transition: background 0.3s ease;
-      }
-      .pagination a:hover {
-        background: #48c6ef;
-      }
-      .file-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-      }
-      .file-card {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 8px;
-        color: #e2e8f0;
-        text-align: center;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      }
-      .file-card h3 {
-        font-size: 1.2rem;
-        margin: 10px 0;
+
+      .logo:hover {
+        transform: scale(1.1);
         color: #48c6ef;
       }
+
+      .btn {
+        padding: 12px 28px;
+        background-color: #4c6ef5;
+        border-radius: 50px;
+        font-weight: 600;
+        color: #fff;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover {
+        background-color: #3b5bdb;
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .file-card {
+        background-color: #ffffff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .file-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+
+      .file-card img {
+        max-height: 200px;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .file-card-header {
+        background: linear-gradient(135deg, #0073e6, #00b0ff);
+        color: #fff;
+        padding: 16px;
+        text-align: center;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .file-card-content {
+        padding: 20px;
+        text-align: center;
+        font-size: 16px;
+      }
+
+      .file-card-content h3 {
+        font-size: 20px;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+      }
+
+      .file-card-content p {
+        font-size: 14px;
+        color: #777;
+        margin-bottom: 16px;
+      }
+
       .footer {
         background: #1a202c;
         color: #a0aec0;
@@ -99,249 +124,187 @@
       .footer a:hover {
         text-decoration: underline;
       }
+
       .arrow {
         position: fixed;
         z-index: 100;
         right: 20px;
+        bottom: 20px;
         background-color: rgba(255, 255, 255, 0.7);
-        color: #333;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px 14px;
+        padding: 14px;
         border-radius: 50%;
         cursor: pointer;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
-        text-align: center;
-        line-height: 1;
+        transition: opacity 0.3s, visibility 0.3s;
       }
-      
-      .arrow-up {
-        bottom: 70px;
-        /* For spacing between up and down arrows */
-      }
-      
-      .arrow-down {
-        bottom: 20px;
-      }
-      
+
       .arrow.show {
         opacity: 1;
         visibility: visible;
       }
-      
+
+      .arrow svg {
+        width: 28px;
+        height: 28px;
+        fill: #333;
+      }
+
       .arrow:hover {
         background-color: rgba(255, 255, 255, 1);
         transform: scale(1.1);
       }
     </style>
   </head>
+
   <body>
-    <!-- Header Section -->
-    <header class="header">
-      <h1 class="logo" onclick="window.location.href = '/'">File Stream Hub</h1>
-      <p>Stream and sort your files effortlessly with modern design.</p>
+
+    <!-- Header -->
+    <header class="py-20 text-center">
+      <h1 class="logo neon-text" onclick="window.location.href = '/'">
+        File Stream Hub
+      </h1>
+      <p class="text-lg mt-4 text-gray-200">Stream your files effortlessly with a modern touch.</p>
     </header>
 
-    <!-- Search and Filter Section -->
-    <section class="container">
-      <form method="get" action="/" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="form-group">
-          <label for="search">Search by File Name</label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Enter file name..."
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          />
-        </div>
-        <div class="form-group">
-          <label for="date">Specify Date</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          />
-        </div>
-        <div class="form-group">
-          <label for="start_date">Start Date</label>
-          <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          />
-        </div>
-        <div class="form-group">
-          <label for="end_date">End Date</label>
-          <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          />
-        </div>
-        <div class="form-group">
-          <label for="sort_field">Sort By</label>
-          <select
-            id="sort_field"
-            name="sort_field"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          >
-            <option value="name">File Name</option>
-            <option value="size">File Size</option>
-            <option value="upload_time">Upload Time</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="sort_order">Order</label>
-          <select
-            id="sort_order"
-            name="sort_order"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
-          >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn w-full mt-6">Apply Filters</button>
-        </div>
+    <!-- Search Form -->
+    <div class="container mx-auto py-8 text-center">
+      <form method="get" action="/" class="flex flex-wrap justify-center items-center space-x-6">
+        <!-- Search Field -->
+        <input
+          type="text"
+          name="search"
+          placeholder="Search by file name..."
+          class="p-3 rounded-lg w-64 text-black"
+          value="{{ search_query }}" />
+       
+        <input
+          type="date"
+          name="date"
+          class="p-3 rounded-lg w-64 text-black"
+          value="{{ date }}" />
+        <!-- Start Date -->
+        <input
+          type="date"
+          name="start_date"
+          class="p-3 rounded-lg text-black"
+          value="{{ start_date }}"
+          placeholder="Start Date" />
+    
+        <!-- End Date -->
+        <input
+          type="date"
+          name="end_date"
+          class="p-3 rounded-lg text-black"
+          value="{{ end_date }}"
+          placeholder="End Date" />
+    
+        <!-- Sort Field Dropdown -->
+        <select name="sort_field" class="p-3 rounded-lg text-black">
+          <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
+          <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
+          <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
+        </select>
+    
+        <!-- Sort Order Dropdown -->
+        <select name="sort_order" class="p-3 rounded-lg text-black">
+          <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+          <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+    
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Apply Filters</button>
       </form>
-    </section>
-
-    <!-- File List Section -->
-    <main class="container mx-auto py-12">
-  <!-- Display message if no links are found -->
-  {% if not links %}
-  <div class="text-center text-gray-300">
-    <p>No files found for "{{ search_query }}"</p>
-  </div>
-  {% else %}
-  <!-- Show total results for a search query -->
-  {% if search_query and page == 1 %}
-  <p class="text-center text-gray-300">
-    Total {{ total_count }} Results found for "{{ search_query }}"
-  </p>
-  <br />
-  {% endif %}
-
-  <!-- File Cards Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-    {% for link in links %}
-    <div class="file-card">
-      <!-- File Thumbnail -->
-      <div class="file-card-header">
-        <img
-          src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}"
-          alt="Thumbnail for {{ link.name }}"
-          loading="lazy"
-        />
-      </div>
-
-      <!-- File Details -->
-      <div class="file-card-content">
-        <h3 class="text-lg font-semibold text-gray-900">{{ link.name }}</h3>
-        <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
-        <p class="text-sm text-gray-500">Uploaded: {{ link.time }}</p>
-
-        <!-- Play Button -->
-        {% if link.url %}
-        <a
-          href="{{ link.url }}"
-          target="_blank"
-          class="btn mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md"
-          >Play Now</a
-        >
-        {% else %}
-        <button
-          class="btn bg-red-600 text-white mt-4 px-6 py-2 rounded-md shadow-md cursor-not-allowed"
-        >
-          Link Unavailable
-        </button>
-        {% endif %}
-      </div>
     </div>
-    {% endfor %}
-  </div>
 
-  <!-- Pagination -->
-  <div class="mt-8 flex justify-center items-center space-x-4">
-    <!-- First Page -->
-    {% if page > 1 %}
-    <a
-      href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
-      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
-      >First</a
-    >
-    <!-- Previous Page -->
-    <a
-      href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
-      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
-      >Previous</a
-    >
-    {% endif %}
 
-    <!-- Current Page Display -->
-    <span class="text-gray-200">
-      Page {{ page }} of {{ total_pages }}
-    </span>
+    <!-- Main Section -->
+    <main class="container mx-auto py-12">
+      {% if not links %}
+      <div class="text-center text-gray-300">
+        <p>No files found for "{{ search_query }}"</p>
+      </div>
+      {% else %}
+      {% if search_query and page == 1 %}
+      <p class="text-center text-gray-300">Total {{ total_count }} Results found for "{{ search_query }}"</p>
+      <br/>
+      {% endif %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {% for link in links %}
+        <div class="file-card">
+          <div class="file-card-header">
+            <img src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}" alt="Thumbnail for {{ link.name }}" loading="lazy" />
+          </div>
+          <div class="file-card-content">
+            <h3>{{ link.name }}</h3>
+            <p>Size: {{ link.size }}</p>
+            <p>Uploaded: {{ link.time }}</p>
+            {% if link.url %}
+            <a href="{{ link.url }}" target="_blank" class="btn mt-4">Play Now</a>
+            {% else %}
+            <button class="btn bg-red-600 mt-4 cursor-not-allowed">Link Unavailable</button>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    
+      <!-- Pagination -->
+      <div class="mt-8 flex justify-center items-center space-x-4">
+        {% if page > 1 %}
+        <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">First</a>
+        <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Previous</a>
+        {% endif %}
+        <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
+        {% if page < total_pages %}
+         <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Next</a>
+         <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Last</a>
+         {% endif %}
+      </div>
+      {% endif %}
+    </main>
+    
 
-    <!-- Next Page -->
-    {% if page < total_pages %}
-    <a
-      href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
-      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
-      >Next</a
-    >
-    <!-- Last Page -->
-    <a
-      href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
-      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
-      >Last</a
-    >
-    {% endif %}
-  </div>
-  {% endif %}
-</main>
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
     </footer>
 
-    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">▲</div>
-    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">▼</div>
+    <!-- Floating Arrows -->
+    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
+      </svg>
+    </div>
+    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
+      </svg>
+    </div>
 
     <script>
       function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-function scrollToBottom() {
-  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-}
+      function scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }
 
-window.addEventListener("scroll", () => {
-  const upArrow = document.querySelector(".arrow-up");
-  const downArrow = document.querySelector(".arrow-down");
+      function toggleArrows() {
+        const scrollPosition = window.scrollY;
+        const scrollHeight = document.body.scrollHeight;
+        const windowHeight = window.innerHeight;
 
-  // Show or hide arrows based on scroll position
-  if (window.scrollY > 100) {
-    upArrow.classList.add("show");
-  } else {
-    upArrow.classList.remove("show");
-  }
+        const upArrow = document.querySelector(".arrow-up");
+        const downArrow = document.querySelector(".arrow-down");
 
-  if (window.innerHeight + window.scrollY < document.body.scrollHeight - 100) {
-    downArrow.classList.add("show");
-  } else {
-    downArrow.classList.remove("show");
-  }
-});
-
+        upArrow.classList.toggle("show", scrollPosition > 100);
+        downArrow.classList.toggle(
+          "show",
+          scrollPosition + windowHeight < scrollHeight - 10
+        );
+      }
     </script>
   </body>
 </html>
