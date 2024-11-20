@@ -170,16 +170,49 @@
 
     <!-- Search Form -->
     <div class="container mx-auto py-8 text-center">
-      <form method="get" action="/" class="flex justify-center items-center space-x-6">
+      <form method="get" action="/" class="flex flex-wrap justify-center items-center space-x-6">
+        <!-- Search Field -->
         <input
           type="text"
           name="search"
           placeholder="Search by file name..."
-          class="p-3 rounded-lg w-96 text-black"
+          class="p-3 rounded-lg w-64 text-black"
           value="{{ search_query }}" />
-        <button type="submit" class="btn">Search</button>
+        
+        <!-- Start Date -->
+        <input
+          type="date"
+          name="start_date"
+          class="p-3 rounded-lg text-black"
+          value="{{ start_date }}"
+          placeholder="Start Date" />
+    
+        <!-- End Date -->
+        <input
+          type="date"
+          name="end_date"
+          class="p-3 rounded-lg text-black"
+          value="{{ end_date }}"
+          placeholder="End Date" />
+    
+        <!-- Sort Field Dropdown -->
+        <select name="sort_field" class="p-3 rounded-lg text-black">
+          <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
+          <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
+          <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
+        </select>
+    
+        <!-- Sort Order Dropdown -->
+        <select name="sort_order" class="p-3 rounded-lg text-black">
+          <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+          <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+        </select>
+    
+        <!-- Submit Button -->
+        <button type="submit" class="btn">Apply Filters</button>
       </form>
     </div>
+
 
     <!-- Main Section -->
     <main class="container mx-auto py-12">
@@ -215,18 +248,17 @@
       <!-- Pagination -->
       <div class="mt-8 flex justify-center items-center space-x-4">
         {% if page > 1 %}
-        <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}" class="btn bg-gray-200 text-gray-800">First</a>
-        <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}" class="btn bg-gray-200 text-gray-800">Previous</a>
+        <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}&sort_field={{ sort_field }}&sort_order={{ sort_order }}" class="btn bg-gray-200 text-gray-800">First</a>
+        <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}&sort_field={{ sort_field }}&sort_order={{ sort_order }}" class="btn bg-gray-200 text-gray-800">Previous</a>
         {% endif %}
         <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
         {% if page < total_pages %}
-        <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}" class="btn bg-gray-200 text-gray-800">Next</a>
-        <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}" class="btn bg-gray-200 text-gray-800">Last</a>
+        <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}&sort_field={{ sort_field }}&sort_order={{ sort_order }}" class="btn bg-gray-200 text-gray-800">Next</a>
+         <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}&sort_field={{ sort_field }}&sort_order={{ sort_order }}" class="btn bg-gray-200 text-gray-800">Last</a>
         {% endif %}
       </div>
       {% endif %}
     </main>
-    
     
 
     <!-- Footer -->
