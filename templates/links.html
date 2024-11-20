@@ -110,13 +110,42 @@
       .footer a:hover {
         text-decoration: underline;
       }
+      .arrow {
+        position: fixed;
+        z-index: 100;
+        right: 20px;
+        bottom: 20px;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+      }
+
+      .arrow.show {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .arrow svg {
+        width: 28px;
+        height: 28px;
+        fill: #333;
+      }
+
+      .arrow:hover {
+        background-color: rgba(255, 255, 255, 1);
+        transform: scale(1.1);
+      }
     </style>
   </head>
 
   <body>
     <!-- Header Section -->
     <header class="header">
-      <h1 class="logo">File Stream Hub</h1>
+      <h1 class="logo" onclick="window.location.href = '/'">File Stream Hub</h1>
       <p>Stream and sort your files effortlessly with modern design.</p>
     </header>
 
@@ -301,5 +330,38 @@
     <footer class="footer">
       <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
     </footer>
+
+    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
+      </svg>
+    </div>
+    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
+      </svg>
+    </div>
+    
+    <script>
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function scrollToBottom() {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }
+
+      function toggleArrows() {
+        const scrollPosition = window.scrollY;
+        const scrollHeight = document.body.scrollHeight;
+        const windowHeight = window.innerHeight;
+
+        const upArrow = document.querySelector(".arrow-up");
+        const downArrow = document.querySelector(".arrow-down");
+
+        upArrow.classList.toggle("show", scrollPosition > 100);
+        
+      }
+    </script>
   </body>
 </html>
