@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Stream and access files effortlessly on File Stream Hub.">
-  <meta name="keywords" content="file streaming, file sharing, modern file hub">
-  <meta name="author" content="File Stream Hub">
-  <title>File Stream Hub - Modern File Streaming</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Stream and access files effortlessly on File Stream Hub."
+    />
+    <meta name="keywords" content="file streaming, file sharing, modern file hub" />
+    <meta name="author" content="File Stream Hub" />
+    <title>File Stream Hub - Modern File Streaming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
       body {
         font-family: "Inter", sans-serif;
         background: linear-gradient(135deg, #1a2334, #2e3a52);
@@ -132,96 +135,196 @@
         background-color: rgba(255, 255, 255, 1);
         transform: scale(1.1);
       }
-  </style>
-</head>
-<body>
-  <header class="header">
-    <h1 class="logo" onclick="window.location.href = '/'">File Stream Hub</h1>
-    <p>Stream and sort your files effortlessly with modern design.</p>
-  </header>
-  <section class="container">
-    <form method="get" action="/" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="form-group">
-        <label for="search">Search by File Name</label> <input type="text" id="search" name="search" placeholder="Enter file name..." class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-      </div>
-      <div class="form-group">
-        <label for="date">Specify Date</label> <input type="date" id="date" name="date" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-      </div>
-      <div class="form-group">
-        <label for="start_date">Start Date</label> <input type="date" id="start_date" name="start_date" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-      </div>
-      <div class="form-group">
-        <label for="end_date">End Date</label> <input type="date" id="end_date" name="end_date" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-      </div>
-      <div class="form-group">
-        <label for="sort_field">Sort By</label> <select id="sort_field" name="sort_field" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-          <option value="name">
-            File Name
-          </option>
-          <option value="size">
-            File Size
-          </option>
-          <option value="upload_time">
-            Upload Time
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="sort_order">Order</label> <select id="sort_order" name="sort_order" class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-          <option value="asc">
-            Ascending
-          </option>
-          <option value="desc">
-            Descending
-          </option>
-        </select>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn w-full mt-6">Apply Filters</button>
-      </div>
-    </form>
-  </section>
-  <main class="container mx-auto py-12">
-    {% if not links %}
-    <div class="text-center text-gray-300">
-      <p>No files found for "{{ search_query }}"</p>
-    </div>{% else %} {% if search_query and page == 1 %}
-    <p class="text-center text-gray-300">Total {{ total_count }} Results found for "{{ search_query }}"</p><br>
-    {% endif %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {% for link in links %}
-      <div class="file-card">
-        <div class="file-card-header"><img src="{{%20link.thumbnail_url%20or%20'https://envs.sh/5bI.jpg'%20}}" alt="Thumbnail for {{ link.name }}" loading="lazy"></div>
-        <div class="file-card-content">
-          <h3 class="text-lg font-semibold text-gray-900">{{ link.name }}</h3>
-          <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
-          <p class="text-sm text-gray-500">Uploaded: {{ link.time }}</p>{% if link.url %} <a href="{{%20link.url%20}}" target="_blank" class="btn mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md">Play Now</a> {% else %} <button class="btn bg-red-600 text-white mt-4 px-6 py-2 rounded-md shadow-md cursor-not-allowed">Link Unavailable</button> {% endif %}
+    </style>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header class="header">
+      <h1 class="logo" onclick="window.location.href = '/'">File Stream Hub</h1>
+      <p>Stream and sort your files effortlessly with modern design.</p>
+    </header>
+
+    <!-- Search and Filter Section -->
+    <section class="container">
+      <form method="get" action="/" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="form-group">
+          <label for="search">Search by File Name</label>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Enter file name..."
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          />
         </div>
-      </div>{% endfor %}
+        <div class="form-group">
+          <label for="date">Specify Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div class="form-group">
+          <label for="start_date">Start Date</label>
+          <input
+            type="date"
+            id="start_date"
+            name="start_date"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div class="form-group">
+          <label for="end_date">End Date</label>
+          <input
+            type="date"
+            id="end_date"
+            name="end_date"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          />
+        </div>
+        <div class="form-group">
+          <label for="sort_field">Sort By</label>
+          <select
+            id="sort_field"
+            name="sort_field"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          >
+            <option value="name">File Name</option>
+            <option value="size">File Size</option>
+            <option value="upload_time">Upload Time</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sort_order">Order</label>
+          <select
+            id="sort_order"
+            name="sort_order"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn w-full mt-6">Apply Filters</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- File List Section -->
+    <main class="container mx-auto py-12">
+  <!-- Display message if no links are found -->
+  {% if not links %}
+  <div class="text-center text-gray-300">
+    <p>No files found for "{{ search_query }}"</p>
+  </div>
+  {% else %}
+  <!-- Show total results for a search query -->
+  {% if search_query and page == 1 %}
+  <p class="text-center text-gray-300">
+    Total {{ total_count }} Results found for "{{ search_query }}"
+  </p>
+  <br />
+  {% endif %}
+
+  <!-- File Cards Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    {% for link in links %}
+    <div class="file-card">
+      <!-- File Thumbnail -->
+      <div class="file-card-header">
+        <img
+          src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}"
+          alt="Thumbnail for {{ link.name }}"
+          loading="lazy"
+        />
+      </div>
+
+      <!-- File Details -->
+      <div class="file-card-content">
+        <h3 class="text-lg font-semibold text-gray-900">{{ link.name }}</h3>
+        <p class="text-sm text-gray-500">Size: {{ link.size }}</p>
+        <p class="text-sm text-gray-500">Uploaded: {{ link.time }}</p>
+
+        <!-- Play Button -->
+        {% if link.url %}
+        <a
+          href="{{ link.url }}"
+          target="_blank"
+          class="btn mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md shadow-md"
+          >Play Now</a
+        >
+        {% else %}
+        <button
+          class="btn bg-red-600 text-white mt-4 px-6 py-2 rounded-md shadow-md cursor-not-allowed"
+        >
+          Link Unavailable
+        </button>
+        {% endif %}
+      </div>
     </div>
-    <div class="mt-8 flex justify-center items-center space-x-4">
-      {% if page &gt; 1 %} <a href="/?page=1{%%20if%20search_query%20%}&amp;search={{%20search_query%20}}{%%20endif%20%}{%%20if%20date%20%}&amp;date={{%20date%20}}{%%20endif%20%}{%%20if%20start_date%20%}&amp;start_date={{%20start_date%20}}{%%20endif%20%}{%%20if%20end_date%20%}&amp;end_date={{%20end_date%20}}{%%20endif%20%}{%%20if%20sort_field%20%}&amp;sort_field={{%20sort_field%20}}{%%20endif%20%}{%%20if%20sort_order%20%}&amp;sort_order={{%20sort_order%20}}{%%20endif%20%}" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md">First</a> <a href="/?page={{%20page%20-%201%20}}{%%20if%20search_query%20%}&amp;search={{%20search_query%20}}{%%20endif%20%}{%%20if%20date%20%}&amp;date={{%20date%20}}{%%20endif%20%}{%%20if%20start_date%20%}&amp;start_date={{%20start_date%20}}{%%20endif%20%}{%%20if%20end_date%20%}&amp;end_date={{%20end_date%20}}{%%20endif%20%}{%%20if%20sort_field%20%}&amp;sort_field={{%20sort_field%20}}{%%20endif%20%}{%%20if%20sort_order%20%}&amp;sort_order={{%20sort_order%20}}{%%20endif%20%}" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md">Previous</a> {% endif %} <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span> {% if page &lt; total_pages %} <a href="/?page={{%20page%20+%201%20}}{%%20if%20search_query%20%}&amp;search={{%20search_query%20}}{%%20endif%20%}{%%20if%20date%20%}&amp;date={{%20date%20}}{%%20endif%20%}{%%20if%20start_date%20%}&amp;start_date={{%20start_date%20}}{%%20endif%20%}{%%20if%20end_date%20%}&amp;end_date={{%20end_date%20}}{%%20endif%20%}{%%20if%20sort_field%20%}&amp;sort_field={{%20sort_field%20}}{%%20endif%20%}{%%20if%20sort_order%20%}&amp;sort_order={{%20sort_order%20}}{%%20endif%20%}" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md">Next</a> <a href="/?page={{%20total_pages%20}}{%%20if%20search_query%20%}&amp;search={{%20search_query%20}}{%%20endif%20%}{%%20if%20date%20%}&amp;date={{%20date%20}}{%%20endif%20%}{%%20if%20start_date%20%}&amp;start_date={{%20start_date%20}}{%%20endif%20%}{%%20if%20end_date%20%}&amp;end_date={{%20end_date%20}}{%%20endif%20%}{%%20if%20sort_field%20%}&amp;sort_field={{%20sort_field%20}}{%%20endif%20%}{%%20if%20sort_order%20%}&amp;sort_order={{%20sort_order%20}}{%%20endif%20%}" class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md">Last</a> {% endif %}
-    </div>{% endif %}
-  </main>
-  <footer class="footer">
-    <p>© 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
-  </footer>
-  <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
-    ▲
+    {% endfor %}
   </div>
-  <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
-    ▼
+
+  <!-- Pagination -->
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <!-- First Page -->
+    {% if page > 1 %}
+    <a
+      href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
+      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+      >First</a
+    >
+    <!-- Previous Page -->
+    <a
+      href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
+      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+      >Previous</a
+    >
+    {% endif %}
+
+    <!-- Current Page Display -->
+    <span class="text-gray-200">
+      Page {{ page }} of {{ total_pages }}
+    </span>
+
+    <!-- Next Page -->
+    {% if page < total_pages %}
+    <a
+      href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
+      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+      >Next</a
+    >
+    <!-- Last Page -->
+    <a
+      href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}"
+      class="btn bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+      >Last</a
+    >
+    {% endif %}
   </div>
-  <script>
+  {% endif %}
+</main>
+    <!-- Footer Section -->
+    <footer class="footer">
+      <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">▲</div>
+    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">▼</div>
+
+    <script>
       function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+}
 
-  function scrollToBottom() {
+function scrollToBottom() {
   window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  }
+}
 
-  window.addEventListener("scroll", () => {
+window.addEventListener("scroll", () => {
   const upArrow = document.querySelector(".arrow-up");
   const downArrow = document.querySelector(".arrow-down");
 
@@ -237,8 +340,8 @@
   } else {
     downArrow.classList.remove("show");
   }
-  });
+});
 
-  </script>
-</body>
+    </script>
+  </body>
 </html>
