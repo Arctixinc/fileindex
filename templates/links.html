@@ -71,6 +71,18 @@
       .footer a:hover {
         text-decoration: underline;
       }
+
+      .transparent-btn {
+  background-color: transparent;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.transparent-btn:hover {
+  background-color: rgba(59, 130, 246, 1); /* Blue with no transparency */
+}
       #scroll-buttons button {
     transition: all 0.3s ease-in-out;
   }
@@ -242,12 +254,12 @@
       </main>
 
     <!-- Scroll buttons -->
-   <div id="scroll-buttons" class="fixed bottom-4 right-4">
+    <div id="scroll-buttons" class="fixed bottom-4 right-4">
   <!-- Scroll to Top Button -->
   <button
     id="scroll-top"
     onclick="scrollToTop()"
-    class="hidden bg-blue-600 text-white p-3 rounded shadow hover:bg-blue-700 focus:outline-none"
+    class="hidden bg-transparent text-white border border-white p-3 rounded-full shadow transition-transform duration-300 hover:scale-110 focus:outline-none"
     title="Scroll to Top">
     ↑
   </button>
@@ -256,11 +268,12 @@
   <button
     id="scroll-bottom"
     onclick="scrollToBottom()"
-    class="hidden bg-blue-600 text-white p-3 rounded shadow hover:bg-blue-700 focus:outline-none"
+    class="hidden bg-transparent text-white border border-white p-3 rounded-full shadow transition-transform duration-300 hover:scale-110 focus:outline-none"
     title="Scroll to Bottom">
     ↓
   </button>
-</div>
+    </div>
+    
 
 
 
