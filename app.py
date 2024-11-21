@@ -91,6 +91,7 @@ def get_links():
         links.append({
             "name": doc.get("file_name", "Unknown"),
             "url": f"https://filetolinkbyarctix.arctixapis.workers.dev/watch/{str(doc.get('_id'))}",
+            "download_url": f"https://filetolinkbyarctix.arctixapis.workers.dev/dl/{str(doc.get('_id'))}",
             "size": format_bytes(doc.get("file_size", 0)),
             "time": format_datetime(doc.get("time"))
         })
