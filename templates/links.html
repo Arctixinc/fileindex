@@ -269,7 +269,10 @@
     <i class="fas fa-angle-left"></i>
   </a>
   {% endif %}
-  <span class="text-gray-200 text-base">{{ page }} / {{ total_pages }}</span>
+  <span class="bg-gray-700 text-gray-200 px-3 py-1 rounded-lg shadow-md text-base">
+  Page <span class="font-semibold">{{ page }}</span> of <span class="font-semibold">{{ total_pages }}</span>
+</span>
+
   {% if page < total_pages %}
   <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" 
      class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">
