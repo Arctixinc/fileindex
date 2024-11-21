@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from datetime import datetime, timezone, timedelta
+import requests
 import json
 import pytz
 
@@ -112,97 +113,18 @@ def get_links():
 def status():
     return jsonify({"status": "Server is running"}), 200
 
+def fetch_documentation():
+    response = requests.get("https://yaso.su/raw/ksenpuTY")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": "Failed to load documentation"}
+
 @app.route('/')
 def documentation():
-    return jsonify({
-        "endpoints": {
-            "/api/links": {
-                "description": "Fetch filtered, sorted, and paginated links.",
-                "methods": ["GET"],
-                "query_parameters": {
-                    "search": {
-                        "type": "string",
-                        "default": "",
-                        "description": "Search term for file names (case-insensitive)."
-                    },
-                    "sort_field": {
-                        "type": "string",
-                        "default": "time",
-                        "options": ["time", "file_name"],
-                        "description": "Field to sort by."
-                    },
-                    "sort_order": {
-                        "type": "string",
-                        "default": "desc",
-                        "options": ["asc", "desc"],
-                        "description": "Sorting order."
-                    },
-                    "date": {
-                        "type": "string",
-                        "format": "YYYY-MM-DD",
-                        "description": "Specific date to filter results."
-                    },
-                    "start_date": {
-                        "type": "string",
-                        "format": "YYYY-MM-DD",
-                        "description": "Start date for filtering results."
-                    },
-                    "end_date": {
-                        "type": "string",
-                        "format": "YYYY-MM-DD",
-                        "description": "End date for filtering results."
-                    },
-                    "page": {
-                        "type": "integer",
-                        "default": 1,
-                        "description": "Page number for paginated results."
-                    }
-                },
-                "example_requests": [
-                    {
-                        "description": "Fetch all links (default request).",
-                        "query": "/api/links"
-                    },
-                    {
-                        "description": "Search by file name.",
-                        "query": "/api/links?search=test"
-                    },
-                    {
-                        "description": "Sort by file name in ascending order.",
-                        "query": "/api/links?sort_field=file_name&sort_order=asc"
-                    },
-                    {
-                        "description": "Filter by specific date.",
-                        "query": "/api/links?date=2024-11-01"
-                    },
-                    {
-                        "description": "Filter by date range.",
-                        "query": "/api/links?start_date=2024-11-01&end_date=2024-11-10"
-                    },
-                    {
-                        "description": "Fetch page 2 of results.",
-                        "query": "/api/links?page=2"
-                    },
-                    {
-                        "description": "Combined search, filter, sort, and pagination.",
-                        "query": "/api/links?search=test&sort_field=file_name&sort_order=asc&start_date=2024-11-01&end_date=2024-11-10&page=3"
-                    }
-                ]
-            },
-            "/status": {
-                "description": "Check the server's running status.",
-                "methods": ["GET"],
-                "example_request": {
-                    "query": "/status"
-                },
-                "example_response": {
-                    "status": "Server is running"
-                }
-            }
-        }
-    })
-    
-
+    # Fetch the documentation from the GitHub raw URL
+    documentation_data = fetch_documentation()
+    return jsonify(documentation_data)
 
 if __name__ == '__main__':
     app.run(debug=True)
