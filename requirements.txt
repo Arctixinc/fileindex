@@ -2,4 +2,4 @@ pytz
 gunicorn
 Flask
 pymongo
-requets
+requests
