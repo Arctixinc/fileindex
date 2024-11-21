@@ -2,4 +2,3 @@ pytz
 gunicorn
 Flask
 pymongo
-requets
