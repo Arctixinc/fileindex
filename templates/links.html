@@ -3,308 +3,252 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Stream and access files effortlessly on File Stream Hub." />
-    <meta name="keywords" content="file streaming, file sharing, modern file hub" />
+    <meta
+      name="description"
+      content="Stream and access files effortlessly on File Stream Hub." />
+    <meta
+      name="keywords"
+      content="file streaming, file sharing, modern file hub" />
     <meta name="author" content="File Stream Hub" />
-    <title>Modern File Stream</title>
+    <title>File Stream Hub - Modern File Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: 'Inter', sans-serif;
-        background: linear-gradient(135deg, #2e3b4e, #3b5b72);
-        color: #f9f9f9;
-        margin: 0;
-        padding: 0;
-      }
-
-      .neon-text {
-        color: #fff;
-        text-shadow: 0 0 15px #48c6ef, 0 0 25px #48c6ef, 0 0 35px #48c6ef;
-        transition: text-shadow 0.4s ease-in-out;
-      }
-
-      .neon-text:hover {
-        text-shadow: 0 0 20px #48c6ef, 0 0 30px #48c6ef, 0 0 40px #48c6ef;
-      }
-
-      .logo {
-        font-size: 3.5rem;
-        font-weight: 800;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: transform 0.3s ease, color 0.3s ease;
-      }
-
-      .logo:hover {
-        transform: scale(1.1);
-        color: #48c6ef;
-      }
-
-      .btn {
-        padding: 12px 28px;
-        background-color: #4c6ef5;
-        border-radius: 50px;
-        font-weight: 600;
-        color: #fff;
-        text-transform: uppercase;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .btn:hover {
-        background-color: #3b5bdb;
-        transform: scale(1.05);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      }
-
-      .file-card {
-        background-color: #ffffff;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .file-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-      }
-
-      .file-card img {
-        max-height: 200px;
-        object-fit: cover;
-        width: 100%;
-      }
-
-      .file-card-header {
-        background: linear-gradient(135deg, #0073e6, #00b0ff);
-        color: #fff;
-        padding: 16px;
-        text-align: center;
-        font-weight: 700;
-        letter-spacing: 1px;
-      }
-
-      .file-card-content {
-        padding: 20px;
-        text-align: center;
-        font-size: 16px;
-      }
-
-      .file-card-content h3 {
-        font-size: 20px;
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 10px;
-      }
-
-      .file-card-content p {
-        font-size: 14px;
-        color: #777;
-        margin-bottom: 16px;
-      }
-
-      .footer {
-        background: #1a202c;
-        color: #a0aec0;
-        text-align: center;
-        padding: 20px;
-        margin-top: 30px;
-      }
-      .footer a {
-        color: #48c6ef;
-        text-decoration: none;
-      }
-      .footer a:hover {
-        text-decoration: underline;
-      }
-
-      .arrow {
-        position: fixed;
-        z-index: 100;
-        right: 20px;
-        bottom: 20px;
-        background-color: rgba(255, 255, 255, 0.7);
-        padding: 14px;
-        border-radius: 50%;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s, visibility 0.3s;
-      }
-
-      .arrow.show {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .arrow svg {
-        width: 28px;
-        height: 28px;
-        fill: #333;
-      }
-
-      .arrow:hover {
-        background-color: rgba(255, 255, 255, 1);
-        transform: scale(1.1);
-      }
-    </style>
   </head>
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #1a2334, #2e3a52);
+      color: #f1f5f9;
+      margin: 0;
+    }
 
+    .header {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #48c6ef;
+      cursor: pointer;
+      letter-spacing: 1px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .btn {
+      background-color: #4c6ef5;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #3b5bdb;
+    }
+    .footer {
+      background: #1a202c;
+      color: #a0aec0;
+      text-align: center;
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .footer a {
+      color: #48c6ef;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
   <body>
-
-    <!-- Header -->
-    <header class="py-20 text-center">
+    <header class="header text-center">
       <h1 class="logo neon-text" onclick="window.location.href = '/'">
         File Stream Hub
       </h1>
-      <p class="text-lg mt-4 text-gray-200">Stream your files effortlessly with a modern touch.</p>
+      <p>Stream and sort your files effortlessly with modern design.</p>
     </header>
-
-    <!-- Search Form -->
-    <div class="container mx-auto py-8 text-center">
-      <form method="get" action="/" class="flex flex-wrap justify-center items-center space-x-6">
-        <!-- Search Field -->
-        <input
-          type="text"
-          name="search"
-          placeholder="Search by file name..."
-          class="p-3 rounded-lg w-64 text-black"
-          value="{{ search_query }}" />
-       
-        <input
-          type="date"
-          name="date"
-          class="p-3 rounded-lg w-64 text-black"
-          value="{{ date }}" />
-        <!-- Start Date -->
-        <input
-          type="date"
-          name="start_date"
-          class="p-3 rounded-lg text-black"
-          value="{{ start_date }}"
-          placeholder="Start Date" />
-    
-        <!-- End Date -->
-        <input
-          type="date"
-          name="end_date"
-          class="p-3 rounded-lg text-black"
-          value="{{ end_date }}"
-          placeholder="End Date" />
-    
-        <!-- Sort Field Dropdown -->
-        <select name="sort_field" class="p-3 rounded-lg text-black">
-          <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
-          <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
-          <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
-        </select>
-    
-        <!-- Sort Order Dropdown -->
-        <select name="sort_order" class="p-3 rounded-lg text-black">
-          <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
-          <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
-        </select>
-    
-        <!-- Submit Button -->
-        <button type="submit" class="btn">Apply Filters</button>
-      </form>
-    </div>
-
-
-    <!-- Main Section -->
-    <main class="container mx-auto py-12">
-      {% if not links %}
-      <div class="text-center text-gray-300">
-        <p>No files found for "{{ search_query }}"</p>
-      </div>
-      {% else %}
-      {% if search_query and page == 1 %}
-      <p class="text-center text-gray-300">Total {{ total_count }} Results found for "{{ search_query }}"</p>
-      <br/>
-      {% endif %}
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {% for link in links %}
-        <div class="file-card">
-          <div class="file-card-header">
-            <img src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}" alt="Thumbnail for {{ link.name }}" loading="lazy" />
-          </div>
-          <div class="file-card-content">
-            <h3>{{ link.name }}</h3>
-            <p>Size: {{ link.size }}</p>
-            <p>Uploaded: {{ link.time }}</p>
-            {% if link.url %}
-            <a href="{{ link.url }}" target="_blank" class="btn mt-4">Play Now</a>
-            {% else %}
-            <button class="btn bg-red-600 mt-4 cursor-not-allowed">Link Unavailable</button>
-            {% endif %}
-          </div>
+    <section class="container">
+      <form
+        method="get"
+        action="/"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- File Name Search -->
+        <div class="form-group">
+          <label for="search">Search by File Name</label>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Enter file name..."
+            value="{{ search_query }}"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
         </div>
-        {% endfor %}
-      </div>
-    
-      <!-- Pagination -->
-      <div class="mt-8 flex justify-center items-center space-x-4">
-        {% if page > 1 %}
-        <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">First</a>
-        <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Previous</a>
+
+        <!-- Specific Date -->
+        <div class="form-group">
+          <label for="date">Specify Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value="{{ date }}"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
+        </div>
+
+        <!-- Date Range -->
+        <div class="form-group">
+          <label for="start_date">Start Date</label>
+          <input
+            type="date"
+            id="start_date"
+            name="start_date"
+            value="{{ start_date }}"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
+        </div>
+        <div class="form-group">
+          <label for="end_date">End Date</label>
+          <input
+            type="date"
+            id="end_date"
+            name="end_date"
+            value="{{ end_date }}"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
+        </div>
+
+        <!-- Sort By Options -->
+        <div class="form-group">
+          <label for="sort_field">Sort By</label>
+          <select
+            id="sort_field"
+            name="sort_field"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
+            <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
+            <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
+            <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
+          </select>
+        </div>
+
+        <!-- Sort Order -->
+        <div class="form-group">
+          <label for="sort_order">Order</label>
+          <select
+            id="sort_order"
+            name="sort_order"
+            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
+            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn w-full mt-6 bg-blue-500 hover:bg-blue-600">
+              Apply Filters
+            </button>
+          </div>
+        <div class="form-group">
+            <button 
+              type="button" 
+              class="btn w-full mt-6 bg-red-500 hover:bg-red-600"
+              onclick="resetFilters()">
+              Reset Filters
+            </button>
+        </div>
+          
+      </form>
+    </section>
+    <main class="container mx-auto py-12">
+        {% if not links %}
+        <div class="text-center text-gray-300">
+          <p>No files found for "{{ search_query }}".</p>
+        </div>
+        {% else %}
+        {% if search_query and page == 1 %}
+        <p class="text-center text-gray-300">
+          Total {{ total_count }} Results found for "{{ search_query }}"
+        </p>
+        <br />
         {% endif %}
-        <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
-        {% if page < total_pages %}
-         <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Next</a>
-         <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Last</a>
-         {% endif %}
-      </div>
-      {% endif %}
-    </main>
-    
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {% for link in links %}
+          <div
+            class="file-card bg-gray-800 text-white rounded-lg shadow-lg overflow-hidden">
+            <div class="file-card-header relative">
+              <img
+                src="{{ link.thumbnail_url or 'https://envs.sh/5bI.jpg' }}"
+                alt="Thumbnail for {{ link.name }}"
+                loading="lazy"
+                class="w-full h-40 object-cover" />
+              <div
+                class="absolute top-2 right-2 bg-blue-500 text-xs text-white py-1 px-3 rounded">
+                {{ link.size }}
+              </div>
+            </div>
+            <div class="file-card-content p-4 flex flex-col justify-between">
+              <div>
+                <h3 class="text-lg font-semibold truncate">
+                  {{ link.name }}
+                </h3>
+                <p class="text-sm text-gray-400 mt-2">
+                  Uploaded: {{ link.time }}
+                </p>
+              </div>
+              <div class="mt-4">
+                {% if link.url %}
+                <a
+                  href="{{ link.url }}"
+                  target="_blank"
+                  class="btn w-full bg-blue-500 hover:bg-blue-600 text-center py-2 rounded-lg font-bold transition">
+                  Play Now
+                </a>
+                {% else %}
+                <button
+                  class="btn w-full bg-red-600 text-center py-2 rounded-lg font-bold cursor-not-allowed">
+                  Link Unavailable
+                </button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="mt-8 flex justify-center items-center space-x-4">
+            {% if page > 1 %}
+            <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">First</a>
+            <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Previous</a>
+            {% endif %}
+            <span class="text-gray-200">Page {{ page }} of {{ total_pages }}</span>
+            {% if page < total_pages %}
+             <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Next</a>
+             <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" class="btn bg-gray-200 text-gray-800">Last</a>
+             {% endif %}
+          </div>
+        {% endif %}
+      </main>
+      
+      <footer class="footer">
+        <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
+      </footer>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
-    </footer>
-
-    <!-- Floating Arrows -->
-    <div class="arrow arrow-up" onclick="scrollToTop()" aria-label="Scroll to top">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M12 8l4 4h-3v8h-2v-8h-3l4-4z"></path>
-      </svg>
-    </div>
-    <div class="arrow arrow-down" onclick="scrollToBottom()" aria-label="Scroll to bottom">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M12 16l-4-4h3V4h2v8h3l-4 4z"></path>
-      </svg>
-    </div>
-
-    <script>
-      function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      function scrollToBottom() {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      }
-
-      function toggleArrows() {
-        const scrollPosition = window.scrollY;
-        const scrollHeight = document.body.scrollHeight;
-        const windowHeight = window.innerHeight;
-
-        const upArrow = document.querySelector(".arrow-up");
-        const downArrow = document.querySelector(".arrow-down");
-
-        upArrow.classList.toggle("show", scrollPosition > 100);
-        downArrow.classList.toggle(
-          "show",
-          scrollPosition + windowHeight < scrollHeight - 10
-        );
-      }
-    </script>
+      <script>
+        function resetFilters() {
+            document.getElementById('search').value = '';
+            document.getElementById('date').value = '';
+            document.getElementById('start_date').value = '';
+            document.getElementById('end_date').value = '';
+            document.getElementById('sort_field').value = 'time'; 
+            document.getElementById('sort_order').value = 'asc';
+            document.querySelector('form').submit();
+        }
+      </script>
+      
   </body>
 </html>
