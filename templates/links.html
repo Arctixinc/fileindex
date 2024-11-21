@@ -261,16 +261,24 @@
          <div class="mt-8 flex justify-center items-center space-x-3">
   {% if page > 1 %}
   <a href="/?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" 
-     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">First</a>
+     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">
+    <i class="fas fa-angle-double-left"></i>
+  </a>
   <a href="/?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" 
-     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">Previous</a>
+     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">
+    <i class="fas fa-angle-left"></i>
+  </a>
   {% endif %}
   <span class="text-gray-200 text-base">{{ page }} / {{ total_pages }}</span>
   {% if page < total_pages %}
   <a href="/?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" 
-     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">Next</a>
+     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">
+    <i class="fas fa-angle-right"></i>
+  </a>
   <a href="/?page={{ total_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if date %}&date={{ date }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}{% if sort_field %}&sort_field={{ sort_field }}{% endif %}{% if sort_order %}&sort_order={{ sort_order }}{% endif %}" 
-     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">Last</a>
+     class="btn bg-gray-200 text-gray-800 px-4 py-2 text-base">
+    <i class="fas fa-angle-double-right"></i>
+  </a>
   {% endif %}
 </div>
 
