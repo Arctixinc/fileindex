@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from datetime import datetime, timezone, timedelta
 import json
@@ -6,13 +6,11 @@ import pytz
 
 app = Flask(__name__)
 
-# Connect to MongoDB
+# MongoDB setup (replace with your MongoDB details)
 client = MongoClient("mongodb+srv://sibuna123:sibuna123@personalproject.rb8q7.mongodb.net")
 db = client["FileStream"]
 collection = db["file"]
 
-# Custom filter for size formatting
-@app.template_filter('format_bytes')
 def format_bytes(bytes):
     if bytes < 1024:
         return f"{bytes} B"
@@ -23,6 +21,7 @@ def format_bytes(bytes):
     else:
         return f"{bytes / 1073741824:.2f} GB"
 
+
 def format_datetime(value):
     if isinstance(value, (int, float)):
         value = datetime.fromtimestamp(value, tz=timezone.utc)
@@ -30,18 +29,17 @@ def format_datetime(value):
         ist_time = value.astimezone(pytz.timezone('Asia/Kolkata'))
         return ist_time.strftime('%Y-%m-%d %I:%M:%S %p')
     return "Unknown"
-
-
-
-
-@app.route('/')
-def display_links():
+    
+@app.route('/api/links', methods=['GET'])
+def get_links():
     # Get search, sort, and filter parameters
     search_query = request.args.get('search', '').lower()
-    sort_field = request.args.get('sort_field', 'time')  # Default sort by 'time' (date)
+    sort_field = request.args.get('sort_field', 'time')  # Default sort by 'time'
     sort_order = request.args.get('sort_order', 'desc')  # Default to descending order
+    date = request.args.get('date', '')  # Specific date (YYYY-MM-DD)
     start_date = request.args.get('start_date', '')  # Start date (YYYY-MM-DD)
     end_date = request.args.get('end_date', '')  # End date (YYYY-MM-DD)
+    page = int(request.args.get('page', 1))  # Default to page 1
 
     # Determine sorting direction
     sort_direction = -1 if sort_order == 'desc' else 1
@@ -51,7 +49,16 @@ def display_links():
     if search_query:
         query["file_name"] = {"$regex": search_query, "$options": "i"}
 
-    # Add date range filter if provided
+    # Filter by specific date
+    if date:
+        try:
+            date_start = datetime.strptime(date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            date_end = date_start + timedelta(days=1)  # End of the day
+            query["time"] = {"$gte": date_start.timestamp(), "$lt": date_end.timestamp()}
+        except ValueError:
+            pass
+
+    # Filter by date range (start_date and end_date)
     if start_date or end_date:
         try:
             date_filter = {}
@@ -63,13 +70,13 @@ def display_links():
                 date_filter["$lt"] = end_datetime.timestamp()
             query["time"] = date_filter
         except ValueError:
-            pass  # Ignore invalid date formats
+            pass
 
     # Fetch documents with search, filter, and sort query
     documents = (
         collection.find(query)
         .sort(sort_field, sort_direction)
-        .skip((int(request.args.get('page', 1)) - 1) * 20)
+        .skip((page - 1) * 20)
         .limit(20)
     )
 
@@ -77,7 +84,7 @@ def display_links():
     total_count = collection.count_documents(query)
     total_pages = (total_count + 19) // 20
 
-    # Format data for rendering
+    # Format data for JSON response
     links = []
     for doc in documents:
         links.append({
@@ -87,23 +94,20 @@ def display_links():
             "time": format_datetime(doc.get("time"))
         })
 
-    return render_template(
-        'links.html',
-        links=links,
-        page=int(request.args.get('page', 1)),
-        total_pages=total_pages,
-        search_query=search_query,
-        total_count=total_count,
-        sort_field=sort_field,
-        sort_order=sort_order,
-        start_date=start_date,
-        end_date=end_date
-    )
-    
-@app.route('/status')
-def status():
-    return jsonify({"status": "Server is running"}), 200
+    # Return JSON response
+    return jsonify({
+        "links": links,
+        "page": page,
+        "total_pages": total_pages,
+        "total_count": total_count,
+        "search_query": search_query,
+        "sort_field": sort_field,
+        "sort_order": sort_order,
+        "date": date,
+        "start_date": start_date,
+        "end_date": end_date
+    })
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
+    
