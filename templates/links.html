@@ -12,63 +12,68 @@
     <meta name="author" content="File Stream Hub" />
     <title>File Stream Hub - Modern File Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #1a2334, #2e3a52);
+        color: #f1f5f9;
+        margin: 0;
+      }
+
+      .header {
+        text-align: center;
+        padding: 30px 0;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #48c6ef;
+        cursor: pointer;
+        letter-spacing: 1px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .btn {
+        background-color: #4c6ef5;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+
+      .btn:hover {
+        background-color: #3b5bdb;
+      }
+
+      .footer {
+        background: #1a202c;
+        color: #a0aec0;
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+      }
+
+      .footer a {
+        color: #48c6ef;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+      #scroll-buttons button {
+    transition: all 0.3s ease-in-out;
+  }
+    </style>
   </head>
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      background: linear-gradient(135deg, #1a2334, #2e3a52);
-      color: #f1f5f9;
-      margin: 0;
-    }
-
-    .header {
-      text-align: center;
-      padding: 30px 0;
-    }
-
-    .logo {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #48c6ef;
-      cursor: pointer;
-      letter-spacing: 1px;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .btn {
-      background-color: #4c6ef5;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-transform: uppercase;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #3b5bdb;
-    }
-    .footer {
-      background: #1a202c;
-      color: #a0aec0;
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-    }
-
-    .footer a {
-      color: #48c6ef;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-  </style>
   <body>
     <header class="header text-center">
       <h1 class="logo neon-text" onclick="window.location.href = '/'">
@@ -233,12 +238,69 @@
           </div>
         {% endif %}
       </main>
-      
-      <footer class="footer">
-        <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
-      </footer>
 
-      <script>
+    <!-- Scroll buttons -->
+   <div id="scroll-buttons" class="fixed bottom-4 right-4">
+  <!-- Scroll to Top Button -->
+  <button
+    id="scroll-top"
+    onclick="scrollToTop()"
+    class="hidden bg-blue-600 text-white p-3 rounded shadow hover:bg-blue-700 focus:outline-none"
+    title="Scroll to Top">
+    ↑
+  </button>
+
+  <!-- Scroll to Bottom Button -->
+  <button
+    id="scroll-bottom"
+    onclick="scrollToBottom()"
+    class="hidden bg-blue-600 text-white p-3 rounded shadow hover:bg-blue-700 focus:outline-none"
+    title="Scroll to Bottom">
+    ↓
+  </button>
+</div>
+
+
+
+    <footer class="footer">
+      <p>&copy; 2024 File Stream Hub. <a href="#">Privacy Policy</a></p>
+    </footer>
+
+        
+<script>
+  const scrollTopButton = document.getElementById("scroll-top");
+  const scrollBottomButton = document.getElementById("scroll-bottom");
+
+  // Event listener for scrolling
+  window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+
+    // Calculate the current scroll percentage
+    const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+    // Show "Scroll Up" button and hide "Scroll Down" button when past 70% of the page
+    if (scrollPercentage > 70) {
+      scrollTopButton.classList.remove("hidden");
+      scrollBottomButton.classList.add("hidden");
+    } else {
+      // Show "Scroll Down" button and hide "Scroll Up" button
+      scrollTopButton.classList.add("hidden");
+      scrollBottomButton.classList.remove("hidden");
+    }
+  });
+
+  // Scroll to Top Functionality
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Scroll to Bottom Functionality
+  function scrollToBottom() {
+    const scrollHeight = document.documentElement.scrollHeight;
+    window.scrollTo({ top: scrollHeight, behavior: "smooth" });
+  }
         function resetFilters() {
             document.getElementById('search').value = '';
             document.getElementById('date').value = '';
@@ -248,7 +310,6 @@
             document.getElementById('sort_order').value = 'desc';
             document.querySelector('form').submit();
         }
-      </script>
-      
+    </script>
   </body>
 </html>
