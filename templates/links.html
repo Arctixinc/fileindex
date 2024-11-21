@@ -222,12 +222,23 @@
               </div>
               <div class="mt-4">
                 {% if link.url %}
-                <a
-                  href="{{ link.url }}"
-                  target="_blank"
-                  class="btn w-full bg-blue-500 hover:bg-blue-600 text-center py-2 rounded-lg font-bold transition">
-                  Play Now
-                </a>
+                <div class="flex gap-2">
+                  <a
+                    href="{{ link.url }}"
+                    target="_blank"
+                    class="btn flex-1 bg-blue-500 hover:bg-blue-600 text-center py-2 rounded-lg font-bold transition">
+                    Play Now
+                  </a>
+                  {% if link.download_url %}
+                  <a
+                    href="{{ link.download_url }}"
+                    target="_blank"
+                    class="btn flex-1 bg-green-500 hover:bg-green-600 text-center py-2 rounded-lg font-bold transition">
+                    Download
+                  </a>
+                  {% endif %}
+                </div>
+                
                 {% else %}
                 <button
                   class="btn w-full bg-red-600 text-center py-2 rounded-lg font-bold cursor-not-allowed">
