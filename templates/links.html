@@ -17,14 +17,21 @@
     <meta name="author" content="File Stream Hub" />
     <title>File Stream Hub - Modern File Streaming</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: "Inter", sans-serif;
         background: linear-gradient(135deg, #1a2334, #2e3a52);
+        font-family: 'Poppins', sans-serif;
         color: #f1f5f9;
         margin: 0;
       }
-
+      footer {
+        font-family: 'Montserrat', sans-serif;
+      }
       .header {
         text-align: center;
         padding: 30px 0;
@@ -98,95 +105,98 @@
       </h1>
       <p>Stream and sort your files effortlessly with modern design.</p>
     </header>
-    <section class="container">
-      <form
-        method="get"
-        action="/"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- File Name Search -->
-        <div class="form-group">
-          <label for="search">Search by File Name</label>
-          <input
-            type="text"
-            id="search"
-            name="search"
-            placeholder="Enter file name..."
-            value="{{ search_query }}"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
-        </div>
+<section class="container mx-auto px-4 py-8">
+  <form method="get" action="/" class="space-y-8  p-8 rounded-lg shadow-xl">
 
-        <!-- Specific Date -->
-        <div class="form-group">
-          <label for="date">Specify Date</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value="{{ date }}"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
-        </div>
+    <!-- File Name Search -->
+    <div class="form-group">
+      <label for="search" class="text-lg font-semibold text-gray-300">Search by File Name</label>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Enter file name..."
+        value="{{ search_query }}"
+        class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300" />
+    </div>
 
-        <!-- Date Range -->
-        <div class="form-group">
-          <label for="start_date">Start Date</label>
-          <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            value="{{ start_date }}"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
-        </div>
-        <div class="form-group">
-          <label for="end_date">End Date</label>
-          <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            value="{{ end_date }}"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500" />
-        </div>
+    <!-- Specific Date -->
+    <div class="form-group">
+      <label for="date" class="text-lg font-semibold text-gray-300">Specify Date</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        value="{{ date }}"
+        class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300" />
+    </div>
 
-        <!-- Sort By Options -->
-        <div class="form-group">
-          <label for="sort_field">Sort By</label>
-          <select
-            id="sort_field"
-            name="sort_field"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-            <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
-            <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
-            <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
-          </select>
-        </div>
+    <!-- Date Range -->
+    <div class="grid grid-cols-2 gap-6">
+      <div class="form-group">
+        <label for="start_date" class="text-lg font-semibold text-gray-300">Start Date</label>
+        <input
+          type="date"
+          id="start_date"
+          name="start_date"
+          value="{{ start_date }}"
+          class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300" />
+      </div>
+      <div class="form-group">
+        <label for="end_date" class="text-lg font-semibold text-gray-300">End Date</label>
+        <input
+          type="date"
+          id="end_date"
+          name="end_date"
+          value="{{ end_date }}"
+          class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300" />
+      </div>
+    </div>
 
-        <!-- Sort Order -->
-        <div class="form-group">
-          <label for="sort_order">Order</label>
-          <select
-            id="sort_order"
-            name="sort_order"
-            class="w-full p-3 rounded bg-gray-800 text-white border border-gray-700 focus:ring focus:ring-blue-500">
-            <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
-            <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
-          </select>
-        </div>
+    <!-- Sort By Options -->
+    <div class="form-group">
+      <label for="sort_field" class="text-lg font-semibold text-gray-300">Sort By</label>
+      <select
+        id="sort_field"
+        name="sort_field"
+        class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300">
+        <option value="time" {% if sort_field == 'time' %}selected{% endif %}>Upload Time</option>
+        <option value="file_size" {% if sort_field == 'file_size' %}selected{% endif %}>File Size</option>
+        <option value="file_name" {% if sort_field == 'file_name' %}selected{% endif %}>File Name</option>
+      </select>
+    </div>
 
-        <div class="form-group">
-            <button type="submit" class="btn w-full mt-6 bg-blue-500 hover:bg-blue-600">
-              Apply Filters
-            </button>
-          </div>
-        <div class="form-group">
-            <button 
-              type="button" 
-              class="btn w-full mt-6 bg-red-500 hover:bg-red-600"
-              onclick="resetFilters()">
-              Reset Filters
-            </button>
-        </div>
-          
-      </form>
-    </section>
+    <!-- Sort Order -->
+    <div class="form-group">
+      <label for="sort_order" class="text-lg font-semibold text-gray-300">Order</label>
+      <select
+        id="sort_order"
+        name="sort_order"
+        class="w-full p-4 rounded-lg bg-gray-800 text-white placeholder-gray-400 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all duration-300">
+        <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>Ascending</option>
+        <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>Descending</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between gap-4 mt-8">
+      <button
+        type="submit"
+        class="w-full py-3 px-5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <i class="fas fa-search fa-lg"></i> <!-- Apply Filters Icon -->
+      </button>
+      <button
+        type="button"
+        class="w-full py-3 px-5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500"
+        onclick="resetFilters()">
+        <i class="fas fa-undo fa-lg"></i> <!-- Reset Filters Icon -->
+      </button>
+    </div>
+
+  </form>
+</section>
+
+
     <main class="container mx-auto py-12">
         {% if not links %}
         <div class="text-center text-gray-300">
