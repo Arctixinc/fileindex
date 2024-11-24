@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Connect to MongoDB
 client = MongoClient("mongodb+srv://sibuna123:sibuna123@personalproject.rb8q7.mongodb.net")
-db = client["FileStream"]
+db = client["filedata"]
 collection = db["file"]
 
 # Custom filter for size formatting
