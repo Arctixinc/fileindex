@@ -97,7 +97,8 @@ def display_links():
             "url": f"https://filetolinkbyarctix.arctixapis.workers.dev/watch/{str(doc.get('_id'))}",
             "download_url": f"https://filetolinkbyarctix.arctixapis.workers.dev/dl/{str(doc.get('_id'))}",
             "size": format_bytes(doc.get("file_size", 0)),
-            "time": format_datetime(doc.get("time"))
+            "time": format_datetime(doc.get("time")),
+            "thumbnail_url": doc.get("thumb_url", "https://envs.sh/5bI.jpg"),
         })
 
     return render_template(
